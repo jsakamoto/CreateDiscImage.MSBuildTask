@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(ProjectDir)CreateDiscImage.props" Condition="Exists('$(ProjectDir)CreateDiscImage.props')" />
+  <UsingTask AssemblyFile="$(MSBuildThisFileDirectory)..\tools\CreateDiscImage.MSBuildTask.dll" TaskName="CreateDiscImage" />
+  <PropertyGroup>
+    <DiscImagePath Condition=" '$(DiscImagePath)' == '' ">$(OutputPath)$(TargetName).iso</DiscImagePath>
+    <DiscImageVolumeLabel Condition=" '$(DiscImageVolumeLabel)' == '' "></DiscImageVolumeLabel>
+    <DiscImageFileSystemType Condition=" '$(DiscImageFileSystemType)' == '' ">ISO9660</DiscImageFileSystemType>
+    <DiscImageRemoveRoots Condition=" '$(DiscImageRemoveRoots)' == '' ">$(OutputPath)</DiscImageRemoveRoots>
+    <DiscImageUseJoliet Condition=" '$(DiscImageUseJoliet)' == '' ">true</DiscImageUseJoliet>
+    <CreateDiscImageConfiguration Condition="'$(CreateDiscImageConfiguration)' == ''">Release</CreateDiscImageConfiguration>
+    <CreateDiscImageConfiguration2>;$(CreateDiscImageConfiguration);</CreateDiscImageConfiguration2>
+  </PropertyGroup>
+  <Target Name="CreateDiscImage" AfterTargets="AfterBuild" Condition="$(CreateDiscImageConfiguration2.Contains(';$(Configuration);'))">
+    <ItemGroup Condition=" '$(DisableDefaultDiscImageSourceFiles)' != 'true' ">
+      <DiscImageSourceFiles Include="$(OutputPath)**\*" Exclude="**\*.iso;**\*.vshost.exe;**\*.vshost.exe.manifest" />
+    </ItemGroup>
+    <CreateDiscImage
+      OutputFilePath="$(DiscImagePath)"
+      VolumeLabel="$(DiscImageVolumeLabel)"
+      FileSystemType="$(DiscImageFileSystemType)"
+      UseJoliet="$(DiscImageUseJoliet)"
+      RemoveRoots="$(DiscImageRemoveRoots)"
+      SourceFiles="@(DiscImageSourceFiles)"
+      />
+  </Target>
+  <Target Name="CleanDiscImage" AfterTargets="AfterClean">
+    <Delete Files="$(DiscImagePath)" />
+  </Target>
+</Project>

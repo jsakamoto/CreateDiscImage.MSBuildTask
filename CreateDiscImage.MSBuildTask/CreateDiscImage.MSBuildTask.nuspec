@@ -1,0 +1,32 @@
+﻿<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <copyright>$copyright$</copyright>
+    <projectUrl>https://github.com/jsakamoto/CreateDiscImage.MSBuildTask</projectUrl>
+    <licenseUrl>https://github.com/jsakamoto/CreateDiscImage.MSBuildTask/blob/master/LICENSE</licenseUrl>
+    <!--
+    <iconUrl/>
+    -->
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>MSBuild task for creating disc image file (.iso)</summary>
+    <description>
+      Just by installing this package, a disc image file (.iso) that contains the output files will be created in the output folder when building the project (at default configuration, it works only "Release" build).
+      This MSBuild task support both UDF and CDFS(ISO9660) format.
+    </description>
+    <releaseNotes>
+      <![CDATA[
+      v.1.0.0
+      - 1st Release
+    ]]>
+    </releaseNotes>
+    <tags>msbuild disc discimage udf cdfs iso iso9660</tags>
+  </metadata>
+  <files>
+    <file src="CreateDiscImage.MSBuildTask.targets" target="build" />
+  </files>
+</package>
